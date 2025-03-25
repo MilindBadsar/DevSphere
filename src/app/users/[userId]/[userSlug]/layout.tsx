@@ -4,7 +4,6 @@ import { UserPrefs } from "@/store/Auth";
 import convertDateToRelativeTime from "@/utils/relativeTime";
 import React from "react";
 import EditButton from "./EditButton";
-import Navbar from "./Navbar";
 import { IconClockFilled, IconUserFilled } from "@tabler/icons-react";
 
 const Layout = async ({
@@ -49,7 +48,6 @@ const Layout = async ({
         </div>
       </div>
       <div className="flex flex-col gap-4 sm:flex-row">
-        <Navbar />
         <div className="w-full">{children}</div>
       </div>
     </div>

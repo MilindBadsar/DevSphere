@@ -18,6 +18,7 @@ import {
   questionCollection,
 } from "@/models/name";
 import { Confetti } from "@/components/magicui/confetti";
+import { motion } from "framer-motion";
 
 const LabelInputContainer = ({
   children,
@@ -44,7 +45,11 @@ const LabelInputContainer = ({
  * ![INFO]: for buttons, refer to https://ui.aceternity.com/components/tailwindcss-buttons
  * ******************************************************************************
  */
-const QuestionForm = ({ question }: { question?: Models.Document }) => {
+export default function QuestionForm({
+  question,
+}: {
+  question?: Models.Document;
+}) {
   const { user } = useAuthStore();
   const [tag, setTag] = React.useState("");
   const router = useRouter();
@@ -67,22 +72,22 @@ const QuestionForm = ({ question }: { question?: Models.Document }) => {
     const frame = () => {
       if (Date.now() > end) return;
 
-      Confetti({
-        particleCount: 2,
-        angle: 60,
-        spread: 55,
-        startVelocity: 60,
-        origin: { x: 0, y: 0.5 },
-        colors: colors,
-      });
-      Confetti({
-        particleCount: 2,
-        angle: 120,
-        spread: 55,
-        startVelocity: 60,
-        origin: { x: 1, y: 0.5 },
-        colors: colors,
-      });
+      // Confetti({
+      //   particleCount: 2,
+      //   angle: 60,
+      //   spread: 55,
+      //   startVelocity: 60,
+      //   origin: { x: 0, y: 0.5 },
+      //   colors: colors,
+      // });
+      // Confetti({
+      //   particleCount: 2,
+      //   angle: 120,
+      //   spread: 55,
+      //   startVelocity: 60,
+      //   origin: { x: 1, y: 0.5 },
+      //   colors: colors,
+      // });
 
       requestAnimationFrame(frame);
     };
@@ -150,7 +155,7 @@ const QuestionForm = ({ question }: { question?: Models.Document }) => {
     return response;
   };
 
-  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // didn't check for attachment because it's optional in updating
@@ -173,150 +178,108 @@ const QuestionForm = ({ question }: { question?: Models.Document }) => {
     setLoading(() => false);
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    setFormData((prev) => ({
+      ...prev,
+      attachment: files[0],
+    }));
+  };
+
+  const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const tags = e.target.value.split(",").map((tag) => tag.trim());
+    setFormData((prev) => ({
+      ...prev,
+      tags: new Set(tags),
+    }));
+  };
+
   return (
-    <form className="space-y-4" onSubmit={submit}>
-      {error && (
-        <LabelInputContainer>
-          <div className="text-center">
-            <span className="text-red-500">{error}</span>
-          </div>
-        </LabelInputContainer>
-      )}
-      <LabelInputContainer>
-        <Label htmlFor="title">
-          Title Address
-          <br />
-          <small>
-            Be specific and imagine you&apos;re asking a question to another
-            person.
-          </small>
-        </Label>
-        <Input
-          id="title"
-          name="title"
-          placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
-          type="text"
-          value={formData.title}
-          onChange={(e) =>
-            setFormData((prev) => ({ ...prev, title: e.target.value }))
-          }
-        />
-      </LabelInputContainer>
-      <LabelInputContainer>
-        <Label htmlFor="content">
-          What are the details of your problem?
-          <br />
-          <small>
-            Introduce the problem and expand on what you put in the title.
-            Minimum 20 characters.
-          </small>
-        </Label>
-        <RTE
-          value={formData.content}
-          onChange={(value) =>
-            setFormData((prev) => ({ ...prev, content: value || "" }))
-          }
-        />
-      </LabelInputContainer>
-      <LabelInputContainer>
-        <Label htmlFor="image">
-          Image
-          <br />
-          <small>
-            Add image to your question to make it more clear and easier to
-            understand.
-          </small>
-        </Label>
-        <Input
-          id="image"
-          name="image"
-          accept="image/*"
-          placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
-          type="file"
-          onChange={(e) => {
-            const files = e.target.files;
-            if (!files || files.length === 0) return;
-            setFormData((prev) => ({
-              ...prev,
-              attachment: files[0],
-            }));
-          }}
-        />
-      </LabelInputContainer>
-      <LabelInputContainer>
-        <Label htmlFor="tag">
-          Tags
-          <br />
-          <small>
-            Add tags to describe what your question is about. Start typing to
-            see suggestions.
-          </small>
-        </Label>
-        <div className="flex w-full gap-4">
-          <div className="w-full">
-            <Input
-              id="tag"
-              name="tag"
-              placeholder="e.g. (java c objective-c)"
-              type="text"
-              value={tag}
-              onChange={(e) => setTag(() => e.target.value)}
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="space-y-4">
+        <label className="block text-lg font-medium text-white/90">
+          Title
+          <input
+            type="text"
+            value={formData.title}
+            onChange={(e) =>
+              setFormData({ ...formData, title: e.target.value })
+            }
+            className="mt-2 w-full rounded-lg bg-zinc-900 px-4 py-3 text-white/90 border border-white/10 focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20"
+            placeholder="What's your programming question?"
+            required
+          />
+        </label>
+
+        <label className="block text-lg font-medium text-white/90">
+          Question Details
+          <textarea
+            value={formData.content}
+            onChange={(e) =>
+              setFormData({ ...formData, content: e.target.value })
+            }
+            className="mt-2 w-full rounded-lg bg-zinc-900 px-4 py-3 text-white/90 border border-white/10 focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20"
+            placeholder="Describe your question in detail..."
+            required
+          />
+        </label>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <label className="block text-lg font-medium text-white/90">
+            Image
+            <input
+              type="file"
+              onChange={handleFileChange}
+              accept="image/*"
+              className="mt-2 w-full rounded-lg bg-zinc-900 px-4 py-3 text-white/90 border border-white/10 focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20"
             />
-          </div>
-          <button
-            className="relative shrink-0 rounded-full border border-slate-600 bg-slate-700 px-8 py-2 text-sm text-white transition duration-200 hover:shadow-2xl hover:shadow-white/[0.1]"
-            type="button"
-            onClick={() => {
-              if (tag.length === 0) return;
-              setFormData((prev) => ({
-                ...prev,
-                tags: new Set([...Array.from(prev.tags), tag]),
-              }));
-              setTag(() => "");
-            }}
-          >
-            <div className="absolute inset-x-0 -top-px mx-auto h-px w-1/2 bg-gradient-to-r from-transparent via-teal-500 to-transparent shadow-2xl" />
-            <span className="relative z-20">Add</span>
-          </button>
+          </label>
+
+          <label className="block text-lg font-medium text-white/90">
+            Tags
+            <input
+              type="text"
+              value={Array.from(formData.tags).join(", ")}
+              onChange={handleTagsChange}
+              className="mt-2 w-full rounded-lg bg-zinc-900 px-4 py-3 text-white/90 border border-white/10 focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20"
+              placeholder="Add tags (comma separated)"
+            />
+          </label>
         </div>
-        <div className="flex flex-wrap gap-2">
-          {Array.from(formData.tags).map((tag, index) => (
-            <div key={index} className="flex items-center gap-2">
-              <div className="group relative inline-block rounded-full bg-slate-800 p-px text-xs font-semibold leading-6 text-white no-underline shadow-2xl shadow-zinc-900">
-                <span className="absolute inset-0 overflow-hidden rounded-full">
-                  <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                </span>
-                <div className="relative z-10 flex items-center space-x-2 rounded-full bg-zinc-950 px-4 py-0.5 ring-1 ring-white/10">
-                  <span>{tag}</span>
-                  <button
-                    onClick={() => {
-                      setFormData((prev) => ({
-                        ...prev,
-                        tags: new Set(
-                          Array.from(prev.tags).filter((t) => t !== tag)
-                        ),
-                      }));
-                    }}
-                    type="button"
-                  >
-                    <IconX size={12} />
-                  </button>
-                </div>
-                <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40" />
-              </div>
-            </div>
-          ))}
-        </div>
-      </LabelInputContainer>
-      <button
-        className="inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+      </div>
+
+      <motion.button
         type="submit"
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        className="w-full md:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-blue-500 text-white font-semibold text-lg hover:opacity-90 transition-opacity"
         disabled={loading}
       >
-        {question ? "Update" : "Publish"}
-      </button>
+        {loading ? (
+          <span className="flex items-center justify-center gap-2">
+            <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+                fill="none"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              />
+            </svg>
+            Publishing...
+          </span>
+        ) : (
+          "Publish Question"
+        )}
+      </motion.button>
     </form>
   );
-};
-
-export default QuestionForm;
+}

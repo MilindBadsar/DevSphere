@@ -14,6 +14,7 @@ interface IAuthStore {
   jwt: string | null;
   user: Models.User<UserPrefs> | null;
   hydrated: boolean;
+  isLoading: boolean; // Add this
 
   setHydrated(): void;
   verifySession(): Promise<void>;
@@ -27,6 +28,7 @@ interface IAuthStore {
     password: string
   ): Promise<{ success: boolean; error?: AppwriteException | null }>;
   logout(): Promise<void>;
+  setUser: (user: Models.User<UserPrefs> | null) => void;
 }
 
 export const useAuthStore = create<IAuthStore>()(
@@ -36,6 +38,7 @@ export const useAuthStore = create<IAuthStore>()(
       jwt: null,
       user: null,
       hydrated: false,
+      isLoading: true,
 
       setHydrated() {
         set({ hydrated: true });
@@ -43,10 +46,27 @@ export const useAuthStore = create<IAuthStore>()(
 
       async verifySession() {
         try {
+          set({ isLoading: true });
           const session = await account.getSession("current");
-          set({ session });
+          const user = await account.get<UserPrefs>(); // Add generic type here
+
+          // Check and initialize reputation if needed
+          if (!user.prefs?.reputation) {
+            await account.updatePrefs<UserPrefs>({ reputation: 0 });
+            user.prefs = { reputation: 0 };
+          }
+
+          set((state) => {
+            state.session = session;
+            state.user = user;
+            state.isLoading = false;
+          });
         } catch (error) {
-          console.error(error);
+          set((state) => {
+            state.session = null;
+            state.user = null;
+            state.isLoading = false;
+          });
         }
       },
       async login(email, password) {
@@ -91,9 +111,12 @@ export const useAuthStore = create<IAuthStore>()(
           console.error(error);
         }
       },
+      setUser: (user) => {
+        set({ user });
+      },
     })),
     {
-      name: "auth",
+      name: "auth-storage",
       onRehydrateStorage() {
         return (state, error) => {
           if (!error) state?.setHydrated();

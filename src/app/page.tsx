@@ -1,107 +1,126 @@
-import Image from "next/image";
+"use client";
+
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { Particles } from "@/components/magicui/particles";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <h1 className="text-4xl font-bold">Welcome to DevSphere</h1>
-        <p className="mt-4 text-xl">
-          Where developers connect, share knowledge, and grow together
-        </p>
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="fixed inset-0 bg-black">
+      <Particles
+        className="absolute inset-0"
+        quantity={100}
+        ease={100}
+        color="#ffffff"
+        refresh={true}
+      />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      <main className="h-full flex flex-col items-center justify-center p-6 relative">
+        <motion.div className="glass-morphism p-8 sm:p-12 space-y-8 max-w-4xl w-full rounded-2xl relative">
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-600/20 to-blue-500/20 opacity-50 blur-xl" />
+
+          <motion.h1
+            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-center relative"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Welcome to{" "}
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500 relative">
+              DevSphere
+              <div className="absolute -inset-1 bg-gradient-to-r from-purple-600/20 to-blue-500/20 blur-xl" />
+            </span>
+          </motion.h1>
+
+          <motion.p
+            className="text-lg md:text-xl text-zinc-400 text-center max-w-2xl mx-auto relative z-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
           >
-            Read our docs
-          </a>
-        </div>
+            Join the next generation of developers sharing knowledge and
+            building the future
+          </motion.p>
+
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <Link
+              href="/questions"
+              className="group relative w-full sm:w-auto px-8 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-blue-500 text-white font-semibold text-center overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-white transition-opacity opacity-0 group-hover:opacity-20" />
+              <motion.span
+                initial={{ y: 0 }}
+                whileHover={{ y: -2 }}
+                className="relative inline-block"
+              >
+                Browse Questions
+              </motion.span>
+            </Link>
+
+            <Link
+              href="/questions/ask"
+              className="group relative w-full sm:w-auto px-8 py-3 rounded-xl bg-black text-white font-semibold text-center overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600/50 to-blue-500/50 opacity-0 group-hover:opacity-20 transition-opacity" />
+              <motion.span
+                initial={{ y: 0 }}
+                whileHover={{ y: -2 }}
+                className="relative inline-block"
+              >
+                Ask a Question
+              </motion.span>
+            </Link>
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12 w-full max-w-6xl px-4"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.5 }}
+        >
+          {features.map((feature, index) => (
+            <motion.div
+              key={feature.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="group glass-morphism p-6 rounded-xl hover:scale-[1.02] transition-all duration-300 relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-500/20 opacity-0 group-hover:opacity-50 transition-opacity" />
+              <h3 className="text-xl font-semibold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500 relative z-10">
+                {feature.title}
+              </h3>
+              <p className="text-zinc-400 relative z-10">
+                {feature.description}
+              </p>
+            </motion.div>
+          ))}
+        </motion.div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
+
+const features = [
+  {
+    title: "Real-time Collaboration",
+    description: "Get instant answers and feedback from developers worldwide.",
+  },
+  {
+    title: "Smart Search",
+    description:
+      "Find solutions quickly with our advanced search capabilities.",
+  },
+  {
+    title: "Modern Experience",
+    description:
+      "Enjoy a beautiful, intuitive interface designed for developers.",
+  },
+];
