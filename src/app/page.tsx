@@ -12,6 +12,10 @@ export default function Home() {
           height={38}
           priority
         />
+        <h1 className="text-4xl font-bold">Welcome to DevSphere</h1>
+        <p className="mt-4 text-xl">
+          Where developers connect, share knowledge, and grow together
+        </p>
         <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
           <li className="mb-2 tracking-[-.01em]">
             Get started by editing{" "}
