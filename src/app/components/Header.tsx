@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/Auth";
 import { useRouter } from "next/navigation";
 import { account } from "@/models/client/config";
@@ -13,6 +13,7 @@ export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const hideHeader = ["/", "/login", "/signup"].includes(pathname);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   useEffect(() => {
     verifySession();
@@ -20,12 +21,27 @@ export default function Header() {
 
   const handleLogout = async () => {
     try {
+      setIsLoggingOut(true);
+      // Delete the current session
       await account.deleteSession("current");
+
+      // Clear user data from store
       setUser(null);
+
+      // Clear any local storage items if they exist
+      localStorage.removeItem("sessionId");
+      localStorage.removeItem("userId");
+
+      // Verify session is cleared
       await verifySession();
+
+      // Redirect to login page
       router.push("/login");
+      router.refresh();
     } catch (error) {
       console.error("Logout failed:", error);
+    } finally {
+      setIsLoggingOut(false);
     }
   };
 
@@ -39,12 +55,13 @@ export default function Header() {
             <Logo />
             <div className="flex items-center gap-4">
               {user ? (
-                <button
+                <ShimmerButton
                   onClick={handleLogout}
-                  className="px-6 py-2 text-sm text-red-400 hover:text-red-300 transition-colors"
+                  disabled={isLoggingOut}
+                  className="px-6 py-2 text-sm bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Logout
-                </button>
+                  {isLoggingOut ? "Logging out..." : "Logout"}
+                </ShimmerButton>
               ) : (
                 <div className="flex items-center gap-4">
                   <Link href="/login">
