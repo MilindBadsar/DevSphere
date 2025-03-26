@@ -217,21 +217,14 @@ export default function QuestionsPage() {
         className="fixed inset-0 w-full h-full opacity-40 text-white/[0.15] pointer-events-none"
       />
 
-      <nav className="sticky top-0 z-50 border-b border-white/10 bg-black/95 backdrop-blur-2xl">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center gap-8">
-            <Logo />
-            <div className="flex-1">
-              <SearchBar />
-            </div>
-            <TagFilter />
-          </div>
-        </div>
-      </nav>
-
       {/* Main Content */}
       <TracingBeam className="max-w-7xl mx-auto px-4 flex-1">
         <main className="pt-24 pb-32 relative z-10">
+          {/* Search Bar Section */}
+          <div className="flex-1 grid lg:grid-cols-4 gap-6 mb-8">
+            <SearchBar />
+          </div>
+
           <div className="flex gap-6">
             <div className="flex-1 grid lg:grid-cols-4 gap-6">
               {/* Main Questions Column */}
@@ -240,9 +233,7 @@ export default function QuestionsPage() {
                   <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">
                     Top Questions
                   </h1>
-                  <span className="text-sm text-zinc-400">
-                    {exampleQuestions.length} questions
-                  </span>
+                  <TagFilter />
                 </div>
 
                 <div className="space-y-4">
@@ -313,10 +304,10 @@ export default function QuestionsPage() {
         </main>
       </TracingBeam>
 
-      {/* Footer with RetroGrid */}
+      {/* Footer */}
       <footer className="relative border-t border-white/10 bg-black/95 backdrop-blur-md mt-auto">
         {/* Footer Content First */}
-        <div className="max-w-7xl mx-auto px-4 py-8 relative z-20">
+        <div className="max-w-7xl mx-auto px-4 py-4 relative z-20">
           <div className="flex flex-col items-center gap-6 mb-8">
             <Logo className="text-2xl" />
             <p className="text-sm text-zinc-400">
@@ -369,7 +360,7 @@ export default function QuestionsPage() {
               </ul>
             </div>
           </div>
-          <div className="mt-6 pt-4 border-t border-white/10 text-center text-sm text-zinc-400">
+          <div className="mt-6 pt-4  text-center text-sm text-zinc-400">
             Built with ❤️ for developers
           </div>
         </div>

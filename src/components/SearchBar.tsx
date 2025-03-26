@@ -1,40 +1,53 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { IconSearch } from "@tabler/icons-react";
+import { motion } from "framer-motion";
 
 export function SearchBar() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isPending, startTransition] = useTransition();
-  const [searchQuery, setSearchQuery] = useState(
-    searchParams.get("search") || ""
-  );
+  const [query, setQuery] = useState(searchParams.get("search") || "");
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    const params = new URLSearchParams(searchParams);
-    if (searchQuery) {
-      params.set("search", searchQuery);
+  const handleSearch = () => {
+    if (query.trim()) {
+      router.push(`/questions?search=${encodeURIComponent(query.trim())}`);
     } else {
-      params.delete("search");
+      router.push("/questions");
     }
-    startTransition(() => {
-      router.push(`/questions?${params.toString()}`);
-    });
   };
 
   return (
-    <form onSubmit={handleSearch} className="relative w-full max-w-md">
-      <input
-        type="text"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        placeholder="Search questions..."
-        className="w-full rounded-lg bg-white/5 px-4 py-2 pl-10 text-sm text-white placeholder:text-zinc-400 border border-white/10 focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20"
-      />
-      <IconSearch className="absolute left-3 top-2.5 h-4 w-4 text-zinc-400" />
-    </form>
+    <div className="flex gap-3 w-full lg:col-span-3">
+      <div className="relative flex-1">
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSearch();
+            }
+          }}
+          placeholder="Search questions..."
+          className="w-full bg-black/80 text-white rounded-xl px-4 py-3.5 pl-12 ring-2 ring-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500/30 placeholder:text-zinc-400 transition-all"
+        />
+        <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400" />
+      </div>
+      <button
+        onClick={handleSearch}
+        className="group relative px-8 py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-blue-500 text-white font-semibold text-center overflow-hidden whitespace-nowrap transition-all duration-200 hover:opacity-80"
+      >
+        <div className="absolute inset-0 bg-black/20 transition-opacity opacity-0 group-hover:opacity-100" />
+        <motion.span
+          initial={{ y: 0 }}
+          whileHover={{ y: -2 }}
+          className="relative inline-block"
+        >
+          Search
+        </motion.span>
+      </button>
+    </div>
   );
 }
