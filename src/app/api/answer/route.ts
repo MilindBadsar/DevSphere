@@ -25,13 +25,22 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json(response, { status: 201 });
-  } catch (error: any) {
-    return NextResponse.json(
-      {
-        error: error?.message || "An error occurred",
-      },
-      { status: error?.status || error?.code || 500 }
-    );
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json(
+        {
+          error: error.message || "An error occurred.",
+        },
+        { status: 500 }
+      );
+    } else {
+      return NextResponse.json(
+        {
+          error: "An unknown error occurred.",
+        },
+        { status: 500 }
+      );
+    }
   }
 }
 
@@ -55,12 +64,21 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json(response, { status: 200 });
 
     //++//
-  } catch (error: any) {
-    return NextResponse.json(
-      {
-        error: error?.message || "An error occurred",
-      },
-      { status: error?.status || error?.code || 500 }
-    );
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json(
+        {
+          error: error.message || "An error occurred.",
+        },
+        { status: 500 }
+      );
+    } else {
+      return NextResponse.json(
+        {
+          error: "An unknown error occurred.",
+        },
+        { status: 500 }
+      );
+    }
   }
 }

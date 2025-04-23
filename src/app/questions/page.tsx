@@ -265,7 +265,7 @@ export default function QuestionsPage() {
                     </span>
                   </div>
                   <div className="space-y-4">
-                    {randomQuestions.map((q, _i) => (
+                    {randomQuestions.map((q) => (
                       <Link
                         key={q.$id}
                         href={`/questions/${q.$id}`}
@@ -305,7 +305,7 @@ export default function QuestionsPage() {
           <div className="flex justify-center">
             <div className="grid grid-cols-2 gap-20">
               <div>
-                <h3 className="text-sm font-medium text-white mb-3">
+                <h3 className="text-lg font-medium text-white mb-3">
                   Navigate
                 </h3>
                 <ul className="space-y-2 text-sm text-zinc-400">
@@ -332,7 +332,7 @@ export default function QuestionsPage() {
               </div>
 
               <div>
-                <h3 className="text-sm font-medium text-white mb-3">Connect</h3>
+                <h3 className="text-lg font-medium text-white mb-3">Connect</h3>
                 <ul className="space-y-2 text-sm text-zinc-400">
                   <li>
                     <a

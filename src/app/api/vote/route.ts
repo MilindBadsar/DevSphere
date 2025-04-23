@@ -7,7 +7,7 @@ import {
 import { databases, users } from "@/models/server/config";
 import { UserPrefs } from "@/store/Auth";
 import { NextRequest, NextResponse } from "next/server";
-import { ID, Query } from "node-appwrite";
+import { Query } from "node-appwrite";
 
 export async function POST(request: NextRequest) {
   try {
@@ -111,12 +111,21 @@ export async function POST(request: NextRequest) {
       },
       { status: 200 }
     );
-  } catch (error: any) {
-    return NextResponse.json(
-      {
-        error: error?.message || "An error occurred in voting",
-      },
-      { status: error?.status || error?.code || 500 }
-    );
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json(
+        {
+          error: error.message || "An error occurred in voting",
+        },
+        { status: 500 }
+      );
+    } else {
+      return NextResponse.json(
+        {
+          error: "An unknown error occurred in voting",
+        },
+        { status: 500 }
+      );
+    }
   }
 }

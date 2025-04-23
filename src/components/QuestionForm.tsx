@@ -1,8 +1,6 @@
 "use client";
 
-import { Meteors } from "@/components/magicui/meteors";
 import { useAuthStore } from "@/store/Auth";
-import { cn } from "@/lib/utils";
 import slugify from "@/utils/slugify";
 import { Models, ID } from "appwrite";
 import { useRouter } from "next/navigation";
@@ -58,7 +56,7 @@ export default function QuestionForm({
   });
 
   const [loading, setLoading] = React.useState(false);
-  const [_error, setError] = React.useState("");
+  const [error, setError] = React.useState("");
 
   const loadConfetti = (timeInMS = 3000) => {
     const end = Date.now() + timeInMS; // 3 seconds
@@ -165,8 +163,12 @@ export default function QuestionForm({
       const response = question ? await update() : await create();
 
       router.push(`/questions/${response.$id}/${slugify(formData.title)}`);
-    } catch (error: any) {
-      setError(() => error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(() => error.message);
+      } else {
+        console.error("Something went wrong");
+      }
     }
 
     setLoading(() => false);
@@ -192,6 +194,7 @@ export default function QuestionForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-4">
+        {error && <p className="error">{error}</p>}
         <label className="block text-lg font-medium text-white/90">
           Title
           <input

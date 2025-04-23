@@ -1,10 +1,7 @@
-import { users } from "@/models/server/config";
-import { UserPrefs } from "@/store/Auth";
 import React from "react";
 
 const Layout = async ({
   children,
-  params,
 }: {
   children: React.ReactNode;
   params: { userId: string; userSlug: string };

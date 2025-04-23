@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { persist } from "zustand/middleware";
-
 import { AppwriteException, ID, Models } from "appwrite";
 import { account } from "@/models/client/config";
 
@@ -61,6 +60,7 @@ export const useAuthStore = create<IAuthStore>()(
             state.isLoading = false;
           });
         } catch (error) {
+          console.error(error);
           set((state) => {
             state.session = null;
             state.user = null;
