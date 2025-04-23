@@ -7,7 +7,6 @@ import { useAuthStore } from "@/store/Auth";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { DotPattern } from "@/components/magicui/dot-pattern";
-import { RetroGrid } from "@/components/magicui/retro-grid";
 import Link from "next/link";
 
 export default function AskQuestion() {

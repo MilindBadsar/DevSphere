@@ -45,17 +45,17 @@ export async function POST(request: NextRequest) {
     }
 
     if (response.documents[0]?.voteStatus !== voteStatus) {
-      const doc = await databases.createDocument(
-        db,
-        voteCollection,
-        ID.unique(),
-        {
-          votedById,
-          voteStatus,
-          type,
-          typeId,
-        }
-      );
+      // const doc = await databases.createDocument(
+      //   db,
+      //   voteCollection,
+      //   ID.unique(),
+      //   {
+      //     votedById,
+      //     voteStatus,
+      //     type,
+      //     typeId,
+      //   }
+      // );
 
       const QuestionOrAnswer = await databases.getDocument(
         db,

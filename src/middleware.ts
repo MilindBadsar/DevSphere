@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 import getOrCreateDB from "./models/server/dbSetup";
 import getOrCreateStorage from "./models/server/storage.collection";
 
-export async function middleware(request: NextRequest) {
+export async function middleware(_request: NextRequest) {
   await Promise.all([getOrCreateDB(), getOrCreateStorage()]);
   return NextResponse.next();
 }

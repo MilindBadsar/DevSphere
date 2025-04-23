@@ -66,7 +66,7 @@ export default function Login() {
       </h2>
       <p className="mt-2 max-w-sm text-sm text-neutral-600 dark:text-neutral-300">
         Log in to DevSphere to continue your journey.
-        <br /> Don't have an account?{" "}
+        <br /> Don&apos;t have an account?{" "}
         <Link href="/signup" className="text-orange-500 hover:underline">
           Sign up
         </Link>

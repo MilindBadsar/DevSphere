@@ -10,7 +10,6 @@ import {
 } from "@/models/name";
 import { Query } from "node-appwrite";
 import { DotPattern } from "@/components/magicui/dot-pattern";
-import { TracingBeam } from "@/components/ui/tracing-beam";
 import Link from "next/link";
 import EditButton from "./EditButton";
 

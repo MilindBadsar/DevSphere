@@ -12,21 +12,12 @@ import { Query } from "node-appwrite";
 import { Models } from "appwrite";
 import React from "react";
 import Link from "next/link";
-import { ShimmerButton } from "@/components/magicui/shimmer-button";
-import QuestionCard from "@/components/QuestionCard";
 import { UserPrefs } from "@/store/Auth";
-import Pagination from "@/components/Pagination";
-import { Search } from "./Search";
-import { motion } from "framer-motion";
 import { DotPattern } from "@/components/magicui/dot-pattern";
 import { TracingBeam } from "@/components/ui/tracing-beam";
-import { AnimatedList } from "@/components/magicui/animated-list";
-import { ShinyButton } from "@/components/magicui/shiny-button";
 import { useSearchParams } from "next/navigation";
 import { SearchBar } from "@/components/SearchBar";
 import { TagFilter } from "@/components/TagFilter";
-import { timeAgo } from "@/utils/timeAgo";
-import Footer from "@/app/components/Footer";
 import { Logo } from "@/components/Logo";
 import { useAuthStore } from "@/store/Auth";
 import { RetroGrid } from "@/components/magicui/retro-grid";
@@ -274,7 +265,7 @@ export default function QuestionsPage() {
                     </span>
                   </div>
                   <div className="space-y-4">
-                    {randomQuestions.map((q, i) => (
+                    {randomQuestions.map((q, _i) => (
                       <Link
                         key={q.$id}
                         href={`/questions/${q.$id}`}

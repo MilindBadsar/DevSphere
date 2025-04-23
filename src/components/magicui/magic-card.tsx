@@ -39,7 +39,7 @@ function useMousePosition(): MousePosition {
 
 interface MagicContainerProps {
   children?: ReactNode;
-  className?: any;
+  className?: string;
 }
 
 const MagicContainer = ({ children, className }: MagicContainerProps) => {
@@ -51,10 +51,11 @@ const MagicContainer = ({ children, className }: MagicContainerProps) => {
 
   useEffect(() => {
     init();
-    containerRef.current &&
+    if (containerRef.current) {
       setBoxes(
         Array.from(containerRef.current.children).map((el) => el as HTMLElement)
       );
+    }
   }, []);
 
   useEffect(() => {

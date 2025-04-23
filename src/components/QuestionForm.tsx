@@ -1,13 +1,9 @@
 "use client";
 
-import RTE from "@/components/RTE";
 import { Meteors } from "@/components/magicui/meteors";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useAuthStore } from "@/store/Auth";
 import { cn } from "@/lib/utils";
 import slugify from "@/utils/slugify";
-import { IconX } from "@tabler/icons-react";
 import { Models, ID } from "appwrite";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -17,28 +13,27 @@ import {
   questionAttachmentBucket,
   questionCollection,
 } from "@/models/name";
-import { Confetti } from "@/components/magicui/confetti";
 import { motion } from "framer-motion";
 
-const LabelInputContainer = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => {
-  return (
-    <div
-      className={cn(
-        "relative flex w-full flex-col space-y-2 overflow-hidden rounded-xl border border-white/20 bg-slate-950 p-4",
-        className
-      )}
-    >
-      <Meteors number={30} />
-      {children}
-    </div>
-  );
-};
+// const LabelInputContainer = ({
+//   children,
+//   className,
+// }: {
+//   children: React.ReactNode;
+//   className?: string;
+// }) => {
+//   return (
+//     <div
+//       className={cn(
+//         "relative flex w-full flex-col space-y-2 overflow-hidden rounded-xl border border-white/20 bg-slate-950 p-4",
+//         className
+//       )}
+//     >
+//       <Meteors number={30} />
+//       {children}
+//     </div>
+//   );
+// };
 
 /**
  * ******************************************************************************
@@ -51,7 +46,7 @@ export default function QuestionForm({
   question?: Models.Document;
 }) {
   const { user } = useAuthStore();
-  const [tag, setTag] = React.useState("");
+  // const [tag, setTag] = React.useState("");
   const router = useRouter();
 
   const [formData, setFormData] = React.useState({
@@ -63,11 +58,11 @@ export default function QuestionForm({
   });
 
   const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState("");
+  const [_error, setError] = React.useState("");
 
   const loadConfetti = (timeInMS = 3000) => {
     const end = Date.now() + timeInMS; // 3 seconds
-    const colors = ["#a786ff", "#fd8bbc", "#eca184", "#f8deb1"];
+    // const colors = ["#a786ff", "#fd8bbc", "#eca184", "#f8deb1"];
 
     const frame = () => {
       if (Date.now() > end) return;
