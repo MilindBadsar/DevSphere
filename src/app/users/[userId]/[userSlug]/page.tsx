@@ -107,9 +107,7 @@ const Page = async ({
 
           <MagicCard className="group relative flex flex-col items-center justify-center p-8 shadow-2xl overflow-hidden rounded-2xl text-center">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-blue-500/10 opacity-0 group-hover:opacity-0 transition-opacity" />
-            <h2 className="text-xl font-medium mb-4 text-white/80">
-              Answersed
-            </h2>
+            <h2 className="text-xl font-medium mb-4 text-white/80">Answered</h2>
             <div className="flex items-center justify-center">
               <p className="text-5xl font-medium text-white">
                 <NumberTicker value={answers.total} />

@@ -169,7 +169,13 @@ export default function AskQuestion() {
                   Ask Question
                 </Link>
                 <Link
-                  href="/profile"
+                  href={
+                    user
+                      ? `/users/${user.$id}/${user.name
+                          .replace(/\s+/g, "-")
+                          .toLowerCase()}`
+                      : "/login"
+                  }
                   className="block text-sm text-zinc-400 hover:text-white transition-colors"
                 >
                   Profile
