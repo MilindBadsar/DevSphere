@@ -33,7 +33,7 @@ const Page = async ({
     ]),
     databases.listDocuments(db, voteCollection, [
       Query.equal("votedById", params.userId),
-      Query.equal("voteStatus", "upvote"), // Using "upvote" as the enum value
+      Query.equal("voteStatus", "upvote"),
     ]),
   ]);
 
@@ -46,7 +46,6 @@ const Page = async ({
       />
 
       <div className="max-w-7xl mx-auto pt-24 px-6 space-y-12">
-        {/* User Profile Header */}
         <div className="glass-morphism p-8 rounded-2xl relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-500/20 opacity-50 blur-xl" />
           <div className="relative z-10 flex items-start gap-8">
@@ -79,7 +78,6 @@ const Page = async ({
           </div>
         </div>
 
-        {/* Stats Grid */}
         <MagicContainer className="grid grid-cols-1 md:grid-cols-4 gap-3">
           <MagicCard className="group relative flex flex-col items-center justify-center p-8 shadow-2xl overflow-hidden rounded-2xl text-center">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-blue-500/10 opacity-0 group-hover:opacity-0 transition-opacity" />
@@ -128,7 +126,6 @@ const Page = async ({
           </MagicCard>
         </MagicContainer>
 
-        {/* Recent Activity */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="space-y-4">
             <h2 className="text-xl font-semibold text-white mb-6">

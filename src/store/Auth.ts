@@ -14,7 +14,7 @@ interface IAuthStore {
   jwt: string | null;
   user: Models.User<UserPrefs> | null;
   hydrated: boolean;
-  isLoading: boolean; // Add this
+  isLoading: boolean;
 
   setHydrated(): void;
   verifySession(): Promise<void>;
@@ -48,9 +48,8 @@ export const useAuthStore = create<IAuthStore>()(
         try {
           set({ isLoading: true });
           const session = await account.getSession("current");
-          const user = await account.get<UserPrefs>(); // Add generic type here
+          const user = await account.get<UserPrefs>();
 
-          // Check and initialize reputation if needed
           if (!user.prefs?.reputation) {
             await account.updatePrefs<UserPrefs>({ reputation: 0 });
             user.prefs = { reputation: 0 };

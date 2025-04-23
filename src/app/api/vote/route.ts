@@ -11,9 +11,8 @@ import { ID, Query } from "node-appwrite";
 
 export async function POST(request: NextRequest) {
   try {
-    // grab the data
     const { votedById, voteStatus, type, typeId } = await request.json();
-    // list document
+
     const response = await databases.listDocuments(db, voteCollection, [
       Query.equal("type", type),
       Query.equal("typeId", typeId),

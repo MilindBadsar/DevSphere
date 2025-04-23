@@ -57,9 +57,7 @@ export default function AskQuestion() {
           animate={{ opacity: 1, y: 0 }}
           className="relative z-10 max-w-6xl mx-auto"
         >
-          {/* Header Section with Two Columns */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            {/* Title Column */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -70,7 +68,6 @@ export default function AskQuestion() {
               </h1>
             </motion.div>
 
-            {/* Guidelines Column */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -92,7 +89,6 @@ export default function AskQuestion() {
             </motion.div>
           </div>
 
-          {/* Question Form Section - Unchanged */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -123,11 +119,9 @@ export default function AskQuestion() {
         </motion.div>
       </main>
 
-      {/* Updated Footer */}
       <footer className="border-t border-white/10 bg-black/95 backdrop-blur-xl w-full mt-auto">
         <div className="max-w-7xl mx-auto px-6 py-12">
           <div className="grid grid-cols-12 gap-12">
-            {/* Logo and Description Column - Takes 6 columns */}
             <div className="col-span-12 md:col-span-6 space-y-6">
               <div>
                 <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500 relative">
@@ -146,7 +140,6 @@ export default function AskQuestion() {
               </div>
             </div>
 
-            {/* Navigation Links - Takes 3 columns */}
             <div className="col-span-6 md:col-span-3 space-y-4">
               <h3 className="text-lg font-semibold text-white">Navigate to</h3>
               <nav className="space-y-3">
@@ -183,18 +176,17 @@ export default function AskQuestion() {
               </nav>
             </div>
 
-            {/* Contact Links - Takes 3 columns */}
             <div className="col-span-6 md:col-span-3 space-y-4">
               <h3 className="text-lg font-semibold text-white">Connect</h3>
               <nav className="space-y-3">
                 <a
-                  href="mailto:your@email.com"
+                  href="mailto:milindbadsar@gmail.com"
                   className="block text-sm text-zinc-400 hover:text-white transition-colors"
                 >
                   Email
                 </a>
                 <a
-                  href="https://github.com/yourusername"
+                  href="https://github.com/MilindBadsar"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block text-sm text-zinc-400 hover:text-white transition-colors"
@@ -202,7 +194,7 @@ export default function AskQuestion() {
                   GitHub
                 </a>
                 <a
-                  href="https://linkedin.com/in/yourusername"
+                  href="https://www.linkedin.com/in/milindbadsar/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block text-sm text-zinc-400 hover:text-white transition-colors"
@@ -210,12 +202,12 @@ export default function AskQuestion() {
                   LinkedIn
                 </a>
                 <a
-                  href="https://twitter.com/yourusername"
+                  href="https://x.com/Milind_Badsar"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block text-sm text-zinc-400 hover:text-white transition-colors"
                 >
-                  Twitter
+                  X
                 </a>
               </nav>
             </div>

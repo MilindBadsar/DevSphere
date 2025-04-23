@@ -158,7 +158,6 @@ export default function QuestionForm({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // didn't check for attachment because it's optional in updating
     if (!formData.title || !formData.content || !formData.authorId) {
       setError(() => "Please fill out all fields");
       return;

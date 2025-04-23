@@ -23,18 +23,11 @@ Ask questions, share knowledge, and connect with developers worldwide in a beaut
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** [Next.js 14](https://nextjs.org/), [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/)
+- **Frontend:** [Next.js 15](https://nextjs.org/), [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/)
 - **Backend:** [Appwrite](https://appwrite.io/) (Database, Auth, Storage)
 - **UI:** [Tailwind CSS](https://tailwindcss.com/), MagicUI, Framer Motion
 - **Editor:** [@uiw/react-md-editor](https://github.com/uiwjs/react-md-editor)
 - **Icons:** [Tabler Icons](https://tabler.io/icons)
-
----
-
-## ✨ Screenshots
-
-![Ask Question](https://user-images.githubusercontent.com/your-ask-screenshot.png)
-![All Questions Page](https://user-images.githubusercontent.com/your-profile-screenshot.png)
 
 ---
 
@@ -43,7 +36,7 @@ Ask questions, share knowledge, and connect with developers worldwide in a beaut
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/devsphere.git
+   git clone https://github.com/MilindBadsar/DevSphere.git
    cd devsphere
    ```
 
@@ -95,8 +88,7 @@ src/
 
 ## 🌐 Live Demo
 
-> [https://devsphere.vercel.app](https://devsphere.vercel.app)  
-> _(Replace with your deployed URL)_
+> [https://devsphere.vercel.app](https://devsphere.vercel.app)
 
 ---
 
@@ -123,4 +115,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-> Made with ❤️ by [Your Name](https://github.com/yourusername)
+> Made with ❤️ by [Milind Badsar](https://github.com/MilindBadsar)

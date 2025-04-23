@@ -28,16 +28,15 @@ import { TagFilter } from "@/components/TagFilter";
 import { timeAgo } from "@/utils/timeAgo";
 import Footer from "@/app/components/Footer";
 import { Logo } from "@/components/Logo";
+import { useAuthStore } from "@/store/Auth";
 import { RetroGrid } from "@/components/magicui/retro-grid";
 
-// Update the Question interface to only include required fields
 interface Question extends Models.Document {
   title: string;
   content: string;
   tags: string[];
 }
 
-// Update example questions with simplified structure and add new questions
 const exampleQuestions: Question[] = [
   {
     $id: "example1",
@@ -108,6 +107,7 @@ const exampleQuestions: Question[] = [
 ];
 
 export default function QuestionsPage() {
+  const { user, verifySession } = useAuthStore();
   const searchParams = useSearchParams();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(true);
@@ -116,6 +116,10 @@ export default function QuestionsPage() {
   const page = searchParams.get("page") || "1";
   const tag = searchParams.get("tag");
   const search = searchParams.get("search");
+
+  useEffect(() => {
+    verifySession();
+  }, []);
 
   useEffect(() => {
     async function fetchQuestions() {
@@ -174,14 +178,13 @@ export default function QuestionsPage() {
               };
             } catch (error) {
               console.error(`Error enhancing question ${ques.$id}:`, error);
-              return ques; // Return original question if enhancement fails
+              return ques;
             }
           })
         );
 
         setQuestions(enhancedQuestions);
 
-        // Fetch random questions with proper typing
         const randomResponse = await databases.listDocuments<Question>(
           db,
           questionCollection,
@@ -217,17 +220,14 @@ export default function QuestionsPage() {
         className="fixed inset-0 w-full h-full opacity-40 text-white/[0.15] pointer-events-none"
       />
 
-      {/* Main Content */}
       <TracingBeam className="max-w-7xl mx-auto px-4 flex-1">
         <main className="pt-24 pb-32 relative z-10">
-          {/* Search Bar Section */}
           <div className="flex-1 grid lg:grid-cols-4 gap-6 mb-8">
             <SearchBar />
           </div>
 
           <div className="flex gap-6">
             <div className="flex-1 grid lg:grid-cols-4 gap-6">
-              {/* Main Questions Column */}
               <div className="lg:col-span-3">
                 <div className="flex items-center justify-between mb-6">
                   <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">
@@ -263,9 +263,8 @@ export default function QuestionsPage() {
                 </div>
               </div>
 
-              {/* Right Sidebar */}
               <div>
-                <div className="glass-morphism p-6 rounded-xl border border-white/[0.05]">
+                <div className="glass-morphism p-6 rounded-xl border border-white/[0.5]">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-lg font-semibold text-white">
                       Latest Questions
@@ -304,9 +303,7 @@ export default function QuestionsPage() {
         </main>
       </TracingBeam>
 
-      {/* Footer */}
       <footer className="relative border-t border-white/10 bg-black/95 backdrop-blur-md mt-auto">
-        {/* Footer Content First */}
         <div className="max-w-7xl mx-auto px-4 py-4 relative z-20">
           <div className="flex flex-col items-center gap-6 mb-8">
             <Logo className="text-2xl" />
@@ -314,58 +311,75 @@ export default function QuestionsPage() {
               Where developers learn, share, & build together
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div>
-              <h3 className="text-sm font-medium text-white mb-3">DevSphere</h3>
-              <ul className="space-y-2 text-sm text-zinc-400">
-                <li>
-                  <Link href="/">Home</Link>
-                </li>
-                <li>
-                  <Link href="/questions">Questions</Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-sm font-medium text-white mb-3">Support</h3>
-              <ul className="space-y-2 text-sm text-zinc-400">
-                <li>
-                  <Link href="/help">Help Center</Link>
-                </li>
-                <li>
-                  <Link href="/terms">Terms of Service</Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-sm font-medium text-white mb-3">Company</h3>
-              <ul className="space-y-2 text-sm text-zinc-400">
-                <li>
-                  <Link href="/about">About</Link>
-                </li>
-                <li>
-                  <Link href="/privacy">Privacy</Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-sm font-medium text-white mb-3">Connect</h3>
-              <ul className="space-y-2 text-sm text-zinc-400">
-                <li>
-                  <Link href="/github">GitHub</Link>
-                </li>
-                <li>
-                  <Link href="/discord">Discord</Link>
-                </li>
-              </ul>
+          <div className="flex justify-center">
+            <div className="grid grid-cols-2 gap-20">
+              <div>
+                <h3 className="text-sm font-medium text-white mb-3">
+                  Navigate
+                </h3>
+                <ul className="space-y-2 text-sm text-zinc-400">
+                  <li>
+                    <Link href="/">Home</Link>
+                  </li>
+                  <li>
+                    <Link
+                      href={
+                        user
+                          ? `/users/${user.$id}/${user.name
+                              .replace(/\s+/g, "-")
+                              .toLowerCase()}`
+                          : "/login"
+                      }
+                    >
+                      Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/questions/ask">Ask a question</Link>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-medium text-white mb-3">Connect</h3>
+                <ul className="space-y-2 text-sm text-zinc-400">
+                  <li>
+                    <a
+                      href="https://github.com/MilindBadsar"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      GitHub
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://www.linkedin.com/in/milindbadsar"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      LinkedIn
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://x.com/Milind_Badsar"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      X
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-          <div className="mt-6 pt-4  text-center text-sm text-zinc-400">
+
+          <div className="mt-6 pt-4 text-center text-sm text-zinc-400">
             Built with ❤️ for developers
           </div>
         </div>
 
-        {/* RetroGrid at Bottom */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <RetroGrid
             className="absolute inset-0 opacity-60"

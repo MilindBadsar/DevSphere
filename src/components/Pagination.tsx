@@ -44,7 +44,7 @@ const Pagination = ({
         Previous
       </button>
       <span>
-        {page} of {totalPages || "1"} {/* incase totalPage is 0 */}
+        {page} of {totalPages || "1"}
       </span>
       <button
         className={`${className} rounded-lg bg-white/10 px-2 py-0.5 duration-200 hover:bg-white/20`}

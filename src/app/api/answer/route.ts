@@ -19,7 +19,6 @@ export async function POST(request: NextRequest) {
       }
     );
 
-    // increase author reputation
     const prefs = await users.getPrefs<UserPrefs>(authorId);
     await users.updatePrefs(authorId, {
       reputation: Number(prefs.reputation) + 1,
@@ -48,7 +47,6 @@ export async function DELETE(request: NextRequest) {
       answerId
     );
 
-    // decrease author reputation
     const prefs = await users.getPrefs<UserPrefs>(authorId);
     await users.updatePrefs(authorId, {
       reputation: Number(prefs.reputation) - 1,

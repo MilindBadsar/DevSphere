@@ -14,7 +14,7 @@ export default async function getOrCreateDB() {
     try {
       await databases.create(db, db);
       console.log("Database created");
-      //create collections
+
       await Promise.all([
         createQuestionCollection(),
         createAnswerCollection(),

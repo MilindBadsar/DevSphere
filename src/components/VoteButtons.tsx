@@ -23,7 +23,7 @@ const VoteButtons = ({
   className?: string;
 }) => {
   const [votedDocument, setVotedDocument] =
-    React.useState<Models.Document | null>(); // undefined means not fetched yet
+    React.useState<Models.Document | null>();
   const [voteResult, setVoteResult] = React.useState<number>(
     upvotes.total - downvotes.total
   );

@@ -3,7 +3,6 @@ import { db, voteCollection } from "../name";
 import { databases } from "./config";
 
 export default async function createAnswerCollection() {
-  //create collection
   await databases.createCollection(db, voteCollection, voteCollection, [
     Permission.create("users"),
     Permission.read("any"),
@@ -13,7 +12,6 @@ export default async function createAnswerCollection() {
   ]);
   console.log("Comment collection created");
 
-  //creating attributes and indexes
   await Promise.all([
     databases.createEnumAttribute(
       db,

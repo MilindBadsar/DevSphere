@@ -22,20 +22,16 @@ export default function Header() {
   const handleLogout = async () => {
     try {
       setIsLoggingOut(true);
-      // Delete the current session
+
       await account.deleteSession("current");
 
-      // Clear user data from store
       setUser(null);
 
-      // Clear any local storage items if they exist
       localStorage.removeItem("sessionId");
       localStorage.removeItem("userId");
 
-      // Verify session is cleared
       await verifySession();
 
-      // Redirect to login page
       router.push("/login");
       router.refresh();
     } catch (error) {

@@ -41,13 +41,13 @@ const Page = async ({
       Query.equal("typeId", params.quesId),
       Query.equal("type", "question"),
       Query.equal("voteStatus", "upvoted"),
-      Query.limit(1), // for optimization
+      Query.limit(1),
     ]),
     databases.listDocuments(db, voteCollection, [
       Query.equal("typeId", params.quesId),
       Query.equal("type", "question"),
       Query.equal("voteStatus", "downvoted"),
-      Query.limit(1), // for optimization
+      Query.limit(1),
     ]),
     databases.listDocuments(db, commentCollection, [
       Query.equal("type", "question"),
@@ -56,7 +56,6 @@ const Page = async ({
     ]),
   ]);
 
-  // since it is dependent on the question, we fetch it here outside of the Promise.all
   const author = await users.get<UserPrefs>(question.authorId);
   [comments.documents, answers.documents] = await Promise.all([
     Promise.all(
@@ -85,13 +84,13 @@ const Page = async ({
             Query.equal("typeId", answer.$id),
             Query.equal("type", "answer"),
             Query.equal("voteStatus", "upvoted"),
-            Query.limit(1), // for optimization
+            Query.limit(1),
           ]),
           databases.listDocuments(db, voteCollection, [
             Query.equal("typeId", answer.$id),
             Query.equal("type", "answer"),
             Query.equal("voteStatus", "downvoted"),
-            Query.limit(1), // for optimization
+            Query.limit(1),
           ]),
         ]);
 

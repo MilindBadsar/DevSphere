@@ -3,7 +3,6 @@ import { db, answerCollection } from "../name";
 import { databases } from "./config";
 
 export default async function createAnswerCollection() {
-  //create collection
   await databases.createCollection(db, answerCollection, answerCollection, [
     Permission.read("any"),
     Permission.read("users"),
@@ -13,7 +12,6 @@ export default async function createAnswerCollection() {
   ]);
   console.log("Answer collection created");
 
-  //creating attributes and indexes
   await Promise.all([
     databases.createStringAttribute(
       db,
