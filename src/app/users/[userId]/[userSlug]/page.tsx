@@ -13,25 +13,24 @@ import { DotPattern } from "@/components/magicui/dot-pattern";
 import Link from "next/link";
 import EditButton from "./EditButton";
 
-const Page = async ({
-  params,
-}: {
-  params: { userId: string; userSlug: string };
+const Page = async ({}: // params,
+{
+  // params: { userId: string; userSlug: string };
 }) => {
   const [user, questions, answers, votes] = await Promise.all([
-    users.get<UserPrefs>(params.userId),
+    users.get<UserPrefs>("params.userId"),
     databases.listDocuments(db, questionCollection, [
-      Query.equal("authorId", params.userId),
+      Query.equal("authorId", "params.userId"),
       Query.orderDesc("$createdAt"),
       Query.limit(5),
     ]),
     databases.listDocuments(db, answerCollection, [
-      Query.equal("authorId", params.userId),
+      Query.equal("authorId", "params.userId"),
       Query.orderDesc("$createdAt"),
       Query.limit(5),
     ]),
     databases.listDocuments(db, voteCollection, [
-      Query.equal("votedById", params.userId),
+      Query.equal("votedById", "params.userId"),
       Query.equal("voteStatus", "upvote"),
     ]),
   ]);
