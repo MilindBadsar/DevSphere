@@ -25,11 +25,12 @@ import DeleteQuestion from "./DeleteQuestion";
 import EditQuestion from "./EditQuestion";
 import { TracingBeam } from "@/components/ui/tracing-beam";
 
-const Page = async ({
+export default async function Page({
   params,
 }: {
   params: { quesId: string; quesName: string };
-}) => {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
   const [question, answers, upvotes, downvotes, comments] = await Promise.all([
     databases.getDocument(db, questionCollection, params.quesId),
     databases.listDocuments(db, answerCollection, [
@@ -232,6 +233,4 @@ const Page = async ({
       </div>
     </TracingBeam>
   );
-};
-
-export default Page;
+}
