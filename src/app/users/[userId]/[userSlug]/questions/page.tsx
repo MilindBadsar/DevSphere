@@ -11,19 +11,18 @@ import { UserPrefs } from "@/store/Auth";
 import { Query } from "node-appwrite";
 import React from "react";
 
-const Page = async ({
-  params,
-  searchParams,
-}: {
-  params: { userId: string; userSlug: string };
-  searchParams: { page?: string };
+const Page = async ({}: // params,
+// searchParams,
+{
+  // params: { userId: string; userSlug: string };
+  // searchParams: { page?: string };
 }) => {
-  searchParams.page ||= "1";
+  // searchParams.page ||= "1";
 
   const queries = [
-    Query.equal("authorId", params.userId),
+    Query.equal("authorId", "params.userId"),
     Query.orderDesc("$createdAt"),
-    Query.offset((+searchParams.page - 1) * 25),
+    // Query.offset((+searchParams.page - 1) * 25),
     Query.limit(25),
   ];
 
