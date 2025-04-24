@@ -4,7 +4,7 @@ const Layout = async ({
   children,
 }: {
   children: React.ReactNode;
-  params: { userId: string; userSlug: string };
+  // params: { userId: string; userSlug: string };
 }) => {
   // const user = await users.get<UserPrefs>(params.userId);
 
