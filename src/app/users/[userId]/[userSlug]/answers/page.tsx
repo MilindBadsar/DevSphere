@@ -8,16 +8,16 @@ import { Query } from "node-appwrite";
 import React from "react";
 
 const Page = async ({
-  params,
+  // params,
   searchParams,
 }: {
-  params: { userId: string; userSlug: string };
+  // params: { userId: string; userSlug: string };
   searchParams: { page?: string };
 }) => {
   searchParams.page ||= "1";
 
   const queries = [
-    Query.equal("authorId", params.userId),
+    Query.equal("authorId", "userId"),
     Query.orderDesc("$createdAt"),
     Query.offset((+searchParams.page - 1) * 25),
     Query.limit(25),
